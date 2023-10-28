@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>True Value Car Price Predictor</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <style>
+      body {
+      margin: 0;
+      padding: 0;
+      background-color: #283593; 
+    }
+    </style>
+    <nav class="navbar navbar-dark bg-dark ">
+        <div class="container-fluid">
+            <img src="https://avgmotors.co.in/wp-content/uploads/2021/10/logo-5.jpg" class="rounded float-end" alt="avgmotors">
+            <a class="navbar-brand" href="#">Car Price Prediction-Stock Vehicles</a>
+            <img src="https://marutisuzukitruevaluecdn2.azureedge.net/-/media/feature/truevalue/header/true-value-logo.png?modified=20190830090427&h=33&w=204&la=en&hash=07C384B14F8AD89854B52E8F4A4E03D0" class="rounded float-start" alt="...">
+        </div>
+    </nav>
+    <br><br><br>
+    <form action="{{ url_for('predict_datapoint')}}" method="post">
+        <div class="container">
+        
+            <div class="row" >
+                
+                <div class="col-6">
+                    <div class="p-3 text-primary-emphasis bg-info-subtle border border-primary-subtle">
+                        <h1 class="display-5">True Value Datails</h1>
+                        <hr>
+                        <div class="mb-3">
+                            <label for="formGroupExampleInput" class="form-label">POC Sale Date</label>
+                            <input type="'date" name="POCSaleDate"  class="form-control" id="formGroupExampleInput" placeholder="Type Sale Date in 'yy-mm-dd' format" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">YOM</label>
+                            <input class="form-control"  type="number" name="YOM" placeholder="Enter Year Of Manufacturing" step="1" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="formGroupExampleInput" class="form-label">Date of Registration</label>
+                            <input type="'date" name="DateOfRegistration" class="form-control" id="formGroupExampleInput" placeholder="Type Reg Date in 'yy-mm-dd' format" required>
+
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Selling Mileage</label>
+                            <input class="form-control" type="number" name="SellingMileage" placeholder="Enter Selling Mileage" step="any" />
+
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Selling Mileage</label>
+                            <input class="form-control" type="number" name="SellingMileage" placeholder="Enter Selling Mileage" step="any" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Buying Price</label>
+                            <input class="form-control" type="number" name="BuyingPrice" placeholder="Enter Buying Price" step="any" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Total Actual RF</label>
+                            <input class="form-control" type="number" name="TotalActualRF" placeholder="Enter Refurbished Cost" step="any" />
+
+
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Warrenty Charges</label>
+                            <input class="form-control" type="number" name="WarrentyCharges" placeholder="Enter Refurbished Cost" step="any" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Insurance Charges</label>
+                            <input class="form-control" type="number" name="InsuranceCharge" placeholder="Enter Insurance Charges" step="any" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="p-3 text-primary-emphasis bg-dark-subtle border border-primary-subtle">
+                        <h1 class="display-5">Vehicle Details</h1>
+                        <hr>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Sale Type</label>
+                            <select class="form-control" name="Saletype" placeholder="Select Sale Type" required>
+                                <option class="placeholder" selected disabled value="">Select Sale Type</option>
+                                <option value="Retail To Customer">Retail To Customer</option>
+                                <option value="Wholesale To Broker">Wholesale To Broker</option>
+                                <option value="Scrap">Scrap</option>
+
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Customer City</label>
+                            <select class="form-control" name="CustomerCity" placeholder="Select customer city" required>
+                                <option class="placeholder" selected disabled value="">Select Customer City</option>
+                                <option value="ERNAKULAM">ERNAKULAM</option>
+                                <option value="KOTTAYAM">KOTTAYAM</option>
+                                <option value="PALA">PALA</option>
+                                <option value="Thodupuzha ">Thodupuzha </option>
+                                <option value="PATHANAMTHITTA">PATHANAMTHITTA</option>
+                                <option value="IDUKKI">IDUKKI</option>
+                                <option value="KOLLAM">KOLLAM</option>
+                                <option value="CHANGANASERRY">CHANGANASERRY</option>
+                                <option value="KANJIRAPALLY">KANJIRAPALLY</option>
+                                <option value="MUVATTUPUZHA">MUVATTUPUZHA</option>
+                                <option value="THIRUVALLA">THIRUVALLA</option>
+                                <option value="KOZHIKODE">KOZHIKODE</option>
+                                <option value="MALAPPURAM">MALAPPURAM</option>
+                                <option value="ALAPPUZHA">ALAPPUZHA</option>
+                                <option value="COCHIN">COCHIN</option>
+                                <option value="KANJIRAPPALLY">KANJIRAPPALLY</option>
+                                <option value="CHENGANNUR">CHENGANNUR</option>
+                                <option value="KOTTARAKKARA">KOTTARAKKARA</option>
+                                <option value="THRISSUR">THRISSUR</option>
+                                <option value="VALANCHERRY">VALANCHERRY</option>
+                                <option value="KATTAPPANA">KATTAPPANA</option>
+                                <option value="ALLEPPEY">ALLEPPEY</option>
+                                <option value="KOTHAMANGALAM">KOTHAMANGALAM</option>
+                                <option value="CHERTHALA">CHERTHALA</option>
+                                <option value="KAYAMKULAM">KAYAMKULAM</option>
+                                <option value="WAYANAD">WAYANAD</option>
+                                <option value="Erattupetta ">Erattupetta </option>
+                                <option value="KASARGOD">KASARGOD</option>
+                                <option value="MAVELLIKARA">MAVELLIKARA</option>
+                                <option value="ADOOR">ADOOR</option>
+                                <option value="PALAKKAD">PALAKKAD</option>
+                                <option value="Vaikom ">Vaikom </option>
+                                <option value="CALICUT">CALICUT</option>
+                                <option value="TRIVANDRUM">TRIVANDRUM</option>
+                                <option value="CANNANORE ">CANNANORE </option>
+                                <option value="Athirampuzha ">Athirampuzha </option>
+                                <option value="QUILON">QUILON</option>
+                                <option value="MALLAPPALLY">MALLAPPALLY</option>
+                                <option value="THODUPUZHA">THODUPUZHA</option>
+                                <option value="FORT KOCHI">FORT KOCHI</option>
+                                <option value="MAVELIKARA">MAVELIKARA</option>
+                                <option value="ANGAMALLY">ANGAMALLY</option>
+                                <option value="THIRUVANANTHAPURAM">THIRUVANANTHAPURAM</option>
+                                <option value="RANNI">RANNI</option>
+                                <option value="PANDALAM">PANDALAM</option>
+                                <option value="KONNI">KONNI</option>
+                                <option value="ALAKODE">ALAKODE</option>
+                                <option value="AYOOR">AYOOR</option>
+                                <option value="Pallichal ">Pallichal </option>
+                                <option value="CHANGANASSERY">CHANGANASSERY</option>
+
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Model</label>
+                            <select class="form-control" name="Model" placeholder="Select Sale Type" required>
+                                <option class="placeholder" selected disabled value="">Select Model</option>
+                                <option value="ALTO">ALTO</option>
+                                <option value="WAGON R">WAGON R</option>
+                                <option value="M 800">M 800</option>
+                                <option value="ALTO 800">ALTO 800</option>
+                                <option value="SWIFT">SWIFT</option>
+                                <option value="ALTO K10">ALTO K10</option>
+                                <option value="CELERIO">CELERIO</option>
+                                <option value="SWIFT DZIRE">SWIFT DZIRE</option>
+                                <option value="OMNI">OMNI</option>
+                                <option value="EECO">EECO</option>
+                                <option value="NEW SWIFT">NEW SWIFT</option>
+                                <option value="HYUNDAI">HYUNDAI</option>
+                                <option value="ALTO K10 (NEW)">ALTO K10 (NEW)</option>
+                                <option value="RITZ">RITZ</option>
+                                <option value="ZEN ESTILO">ZEN ESTILO</option>
+                                <option value="WagonR">WagonR</option>
+                                <option value="BALENO">BALENO</option>
+                                <option value="ZEN">ZEN</option>
+                                <option value="DZIRE">DZIRE</option>
+                                <option value="VITARA BREZZA">VITARA BREZZA</option>
+                                <option value="ERTIGA">ERTIGA</option>
+                                <option value="A-STAR">A-STAR</option>
+                                <option value="Ignis">Ignis</option>
+                                <option value="S-PRESSO">S-PRESSO</option>
+                                <option value="CIAZ">CIAZ</option>
+                                <option value="TATA">TATA</option>
+                                <option value="CHEVROLET">CHEVROLET</option>
+                                <option value="OTHERS">OTHERS</option>
+                                <option value="HONDA">HONDA</option>
+                                <option value="SCROSS">SCROSS</option>
+                                <option value="SX4">SX4</option>
+                                <option value="NEW ERTIGA">NEW ERTIGA</option>
+                                <option value="VOLKSWAGEN">VOLKSWAGEN</option>
+                                <option value="RENAULT">RENAULT</option>
+                                <option value="MAHINDRA">MAHINDRA</option>
+                                <option value="NISSAN">NISSAN</option>
+                                <option value="XL6">XL6</option>
+                                <option value="TOYOTA">TOYOTA</option>
+                                <option value="NEW BALENO">NEW BALENO</option>
+                                <option value="FIAT">FIAT</option>
+                                <option value="ESTEEM">ESTEEM</option>
+                                <option value="NEW CELERIO">NEW CELERIO</option>
+                                <option value="FORD">FORD</option>
+                                <option value="FORCE MOTORS">FORCE MOTORS</option>
+                                <option value="NEW ALTO K10">NEW ALTO K10</option>
+                                <option value="EICHER">EICHER</option>
+                                <option value="SUPER CARRY">SUPER CARRY</option>
+
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Vehicle Sold Category</label>
+                            <select class="form-control" name="VehicleSoldCategory" placeholder="Select Category" required>
+                                <option class="placeholder" selected disabled value="">Select Category</option>
+                                <option value="N-TV">N-TV</option>
+                                <option value="TV">TV</option>
+                            </select>
+
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Finance/Cash</label>
+                            <select class="form-control" name="Finance/Cash" placeholder="Select F/C" required>
+                                <option class="placeholder" selected disabled value="">Select F/C</option>
+                                <option value="F">F</option>
+                                <option value="C">C</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p class="h6 text-center">True Value In Stock</p>
+                            <style>
+                                .h6.text-center {
+                                    color: white;
+                                 }
+                            </style>
+                            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="card" style="width: 18rem;">
+                                            <img src="https://avgmotors.co.in/wp-content/uploads/2023/06/2017-IGNIS-DELTA-AMT-Front-view-265x190.jpg" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <p class="card-text text-center">2017 IGNIS DELTA AMT</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="card" style="width: 18rem;">
+                                            <img src="https://avgmotors.co.in/wp-content/uploads/2023/06/2006-SWIFT-VXI-front-view-265x190.jpg" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <p class="card-text text-center">2006 SWIFT VXI AMT</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="card" style="width: 18rem;">
+                                            <img src="https://avgmotors.co.in/wp-content/uploads/2023/06/2015-ERTIGA-ZDI-front-view-265x190.jpg" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <p class="card-text text-center">2015 ERTIGA ZDI</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="h6 text-center">Non True Value In Stock</p>
+                            <div id="carouselExampleControls1" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="card" style="width: 18rem;">
+                                            <img src="https://avgmotors.co.in/wp-content/uploads/2022/06/2016-Tiago-front-265x190.jpg" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <p class="card-text text-center">2016 TIAGO</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="card" style="width: 18rem;">
+                                            <img src="https://avgmotors.co.in/wp-content/uploads/2022/06/I10-Magna-2015-w-red-Front-265x190.jpg" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <p class="card-text text-center">HYUNDAI I10 MAGNA 2015</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="card" style="width: 18rem;">
+                                            <img src="https://avgmotors.co.in/wp-content/uploads/2021/10/Fiesta-265x190.jpg" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <p class="card-text text-center">FIESTA</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    About AVG Motors
+                                  </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <strong></strong>AVG Motors Ltd is a leading name in the automobile industry in Kerala, with a growing network of showrooms, workshops, True value outlets, and various other facilities. The company commenced its operations in 1998 as an authorized dealer for Maruti Suzuki cars.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                About Project
+                              </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                              <div class="accordion-body">
+                                <strong></strong> This Project is a pure Machine Learning Regression problemcase in which the data is trained on Random Forest Regressor and the real time data is solely Owned by AVG Motors .
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+
+
+                        
+
+
+
+
+
+                        
+
+
+
+                        
+
+
+
+                        
+
+
+
+                    
+
+                </div>
+                
+
+                
+            </div>
+            <br>
+            
+        
+        </div>
+        <!-- <div class="d-grid gap-2">
+            <input class="btn btn-primary" type="submit" value="Predict Car Price" required />
+        </div> -->
+
+    </form>
+    </div>
+        <figure class="text-center">
+            <blockquote class="blockquote">
+              <style>
+                 figure.text-center, blockquote.blockquote {
+                 color: white;
+                 }
+              </style>
+              <p>This will be a good deal: </p> {{results}}
+            </blockquote>
+            
+        </figure>
+    
+    <footer style="background-color: black; color: white; padding: 10px; text-align: center;">
+        &copy; 2023 True Value Sale Price Prediction. All rights reserved.
+   </footer>
+</body>
+</html>
+
+
+
+
+
+
+                        
+
+
+
+
+
+
+
+                    
+
+                
+
+            
+
+        
+      
+   
+
+
+    
+      
+
+    
+        
+
+        
+
+
+       
